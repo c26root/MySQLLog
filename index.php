@@ -29,7 +29,7 @@
 	// 检查是否打开日志
 	function check_log_status() {
 		$conn = connect();
-		$sql = "show variables like '%general_log%'";
+		$sql = "show variables like '%general_log%';";
 		$result = $conn->query($sql);
 		if (!$result) {
 			$arr = array(
@@ -40,9 +40,11 @@
 			echo json($arr);
 			exit();
 		}
+		$row = mysqli_fetch_array($result, MYSQL_ASSOC);
 		$arr = array(
 			'code' => 200,
-			'message' => 'success'
+			'message' => 'success',
+			'result' => $row
 		);
 		echo json($arr);
 		exit();
