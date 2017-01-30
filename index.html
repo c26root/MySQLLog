@@ -9,45 +9,45 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <!--     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+    <style type="text/css">
+
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-2"></div>
-            <div id="app">
-                <h5 v-show="message">message: {{ message }} count: {{ result.length }}</h5>
-                <button class="btn btn-info" @click="getAllLog">
-                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 刷新
-                </button>
-                <button class="btn btn-danger" @click="delAllLog">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除
-                </button>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <!-- <th>ID</th> -->
-                            <th>Date</th>
-                            <th>Host</th>
-                            <!-- <th>command_type</th> -->
-                            <th>SQL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in result">
-                            <!-- <td>{{ item.thread_id }}</td> -->
-                            <td>
-                                <span class="label label-info">{{ item.event_time }}</span>
-                            </td>
-                            <td><span class="label label-success">{{ item.user_host | fmt }}</span></td>
-                            <!-- <td>{{ item.command_type }}</td> -->
-                            <td><h5>{{ item.argument }}</h5></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="container-fluid">
+        <div id="app">
+            <h5 v-show="message">message: {{ message }} count: {{ result.length }}</h5>
+            <button class="btn btn-info" @click="getAllLog">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 刷新
+            </button>
+            <button class="btn btn-danger" @click="delAllLog">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除
+            </button>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <!-- <th>ID</th> -->
+                        <th>Date</th>
+                        <th>Host</th>
+                        <!-- <th>command_type</th> -->
+                        <th>SQL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in result">
+                        <!-- <td>{{ item.thread_id }}</td> -->
+                        <td>
+                            <span class="label label-info">{{ item.event_time }}</span>
+                        </td>
+                        <td><span class="label label-success">{{ item.user_host | fmt }}</span></td>
+                        <!-- <td>{{ item.command_type }}</td> -->
+                        <td>
+                            <h5>{{ item.argument }}</h5></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
     </div>
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript">
@@ -58,15 +58,26 @@
             result: {}
         },
         created: function() {
+            // 打开日志开关
+            this.startLog()
             this.getAllLog()
                 // 定时器
                 // this.intervalid1 = setInterval(() => {
                 //   this.getAllLog()
                 // }, 5000)
         },
-        computed: {
-        },
+        computed: {},
         methods: {
+            startLog: function() {
+                fetch("index.php?act=start_log").then(response => {
+                    return response.json()
+                }).then(response => {
+                    if (response.code == 200) {
+                        console.log("开启日志成功")
+                    }
+
+                })
+            },
             getAllLog: function() {
                 fetch("index.php").then(response => {
                     return response.json()
@@ -89,12 +100,12 @@
             }
         }
     })
-    Vue.filter('fmt', function (value) {
-      let s = /\[(.*?)\]\s(.*?)\s\[\]/.exec(value)
-      if (!s) {
-          console.log("Parse Error")
-      }
-      return (s[1] + s[2]).replace(/\s/g, "")
+    Vue.filter('fmt', function(value) {
+        let s = /\[(.*?)\]\s(.*?)\s\[\]/.exec(value)
+        if (!s) {
+            console.log("Parse Error")
+        }
+        return (s[1] + s[2]).replace(/\s/g, "")
     })
     </script>
 </body>
