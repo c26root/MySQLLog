@@ -1,5 +1,5 @@
 # MySQLLog
-## MySQL Log WEB UI (PHP Vue.js)
+### MySQL Log WEB UI (PHP Vue.js)
 
 ```
 需要root用户权限来开启generol_log
