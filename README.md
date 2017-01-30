@@ -18,3 +18,5 @@ index.php?act=get_all_log
 删除log
 index.php?act=del_all_log
 ```
+###Screeshot
+![](http://p1.bpimg.com/567571/9630db29dc851054.png)

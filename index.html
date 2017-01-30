@@ -43,7 +43,7 @@
                         <td><span class="label label-success">{{ item.user_host | fmt }}</span></td>
                         <!-- <td>{{ item.command_type }}</td> -->
                         <td>
-                            <h5>{{ item.argument }}</h5></td>
+                            <h6>{{ item.argument }}</h6></td>
                     </tr>
                 </tbody>
             </table>
@@ -61,10 +61,10 @@
             // 打开日志开关
             this.startLog()
             this.getAllLog()
-                // 定时器
-                // this.intervalid1 = setInterval(() => {
-                //   this.getAllLog()
-                // }, 5000)
+            // 定时器
+            // this.intervalid1 = setInterval(() => {
+            //   this.getAllLog()
+            // }, 5000)
         },
         computed: {},
         methods: {
@@ -100,6 +100,7 @@
             }
         }
     })
+
     Vue.filter('fmt', function(value) {
         let s = /\[(.*?)\]\s(.*?)\s\[\]/.exec(value)
         if (!s) {
