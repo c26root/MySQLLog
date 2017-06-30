@@ -7,13 +7,14 @@
 	
 	// 数据库相关信息
 	define("HOST", "localhost");
+	define("PORT", 3306);
 	define("USER", "root");
 	define("PASS", "root");
 	define("DBNAME", "mysql");
 
 	// 连接数据库
 	function connect() {
-		$conn = new mysqli(HOST, USER, PASS, DBNAME);
+		$conn = new mysqli(HOST, USER, PASS, DBNAME, PORT);
 		if (mysqli_connect_errno($conn)) {
 			$arr = array(
 				'code' => 500,
